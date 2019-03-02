@@ -6,58 +6,58 @@ class EnrollmentsController < ApplicationController
   end
 
   def show
-    @student = Student.find(params.fetch("id_to_display"))
+    @enrollment = Enrollment.find(params.fetch("id_to_display"))
 
-    render("student_templates/show.html.erb")
+    render("enrollment_templates/show.html.erb")
   end
 
   def new_form
-    render("student_templates/new_form.html.erb")
+    @enrollment = Enrollment.new
+
+    render("enrollment_templates/new_form.html.erb")
   end
 
   def create_row
-    @student = Student.new
+    @enrollment = Enrollment.new
 
-    @student.first_name = params.fetch("first_name")
-    @student.last_name = params.fetch("last_name")
-    @student.email = params.fetch("email")
+    @enrollment.course_id = params.fetch("course_id")
+    @enrollment.student_id = params.fetch("student_id")
 
-    if @student.valid?
-      @student.save
+    if @enrollment.valid?
+      @enrollment.save
 
-      redirect_to("/students", :notice => "Student created successfully.")
+      redirect_back(:fallback_location => "/enrollments", :notice => "Enrollment created successfully.")
     else
-      render("student_templates/new_form.html.erb")
+      render("enrollment_templates/new_form_with_errors.html.erb")
     end
   end
 
   def edit_form
-    @student = Student.find(params.fetch("prefill_with_id"))
+    @enrollment = Enrollment.find(params.fetch("prefill_with_id"))
 
-    render("student_templates/edit_form.html.erb")
+    render("enrollment_templates/edit_form.html.erb")
   end
 
   def update_row
-    @student = Student.find(params.fetch("id_to_modify"))
+    @enrollment = Enrollment.find(params.fetch("id_to_modify"))
 
-    @student.first_name = params.fetch("first_name")
-    @student.last_name = params.fetch("last_name")
-    @student.email = params.fetch("email")
+    @enrollment.course_id = params.fetch("course_id")
+    @enrollment.student_id = params.fetch("student_id")
 
-    if @student.valid?
-      @student.save
+    if @enrollment.valid?
+      @enrollment.save
 
-      redirect_to("/students/#{@student.id}", :notice => "Student updated successfully.")
+      redirect_to("/enrollments/#{@enrollment.id}", :notice => "Enrollment updated successfully.")
     else
-      render("student_templates/edit_form.html.erb")
+      render("enrollment_templates/edit_form_with_errors.html.erb")
     end
   end
 
   def destroy_row
-    @student = Student.find(params.fetch("id_to_remove"))
+    @enrollment = Enrollment.find(params.fetch("id_to_remove"))
 
-    @student.destroy
+    @enrollment.destroy
 
-    redirect_to("/students", :notice => "Student deleted successfully.")
+    redirect_to("/enrollments", :notice => "Enrollment deleted successfully.")
   end
 end
