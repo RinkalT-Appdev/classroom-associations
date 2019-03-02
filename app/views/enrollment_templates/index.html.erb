@@ -1,0 +1,50 @@
+<h1>
+  All enrollments
+</h1>
+
+<a href="/enrollments/new">
+  Add a new enrollment
+</a>
+
+<hr>
+
+<table class="table">
+  <tr>
+    <th>
+      ID
+    </th>
+
+    <th>
+      Course
+    </th>
+    
+   <th>
+     Student
+    </th>
+    
+    <th>
+    </th>
+  </tr>
+
+  <% @enrollments.each do |enrollment| %>
+  <tr>
+    <td>
+      <%= enrollment.id %>
+    </td>
+
+    <td>
+      <%= enrollment.course %>
+    </td>
+    
+     <td>
+      <%= enrollment.student %>
+    </td>
+
+    <td>
+      <a href="/enrollments/<%= enrollment.id %>">
+        Show details
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</table>
